@@ -1,12 +1,12 @@
-# ICU Sepsis Early Warning & Clinical Diagnostic Decision Support System
-**A Causal Bayesian Network for Real-Time Septic Shock Prediction in Intensive Care Units**
+# A Bayesian Network-based Sepsis Risk Detection System
+**An Explainable Causal Probabilistic Model for Early Sepsis Warning in Intensive Care Units**
 
 ---
 
 ## 1. Title and Brief Description of the Application
 
 ### **Application Title:**
-**ICU Early Sepsis Diagnostic Decision Support System (Probabilistic Bayesian Network)**
+**A Bayesian Network-based Sepsis Risk Detection System**
 
 ### **Brief Description:**
 Sepsis is a life-threatening medical emergency caused by the body's overwhelming and dysregulated immune response to an infection. If undiagnosed in its early stages, it rapidly cascades into tissue damage, multi-organ failure, and septic shock, with mortality rates increasing by approximately 7–8% for every hour treatment is delayed.

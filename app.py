@@ -16,7 +16,7 @@ from src.sepsis_model import (
 
 # Page Setup
 st.set_page_config(
-    page_title="ICU Sepsis Early Warning System",
+    page_title="A Bayesian Network-based Sepsis Risk Detection System",
     page_icon="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/hospital.svg",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -244,6 +244,26 @@ div.stButton > button {
     opacity: 1 !important;
 }
 
+/* Hide developer chart action toolbar (Copy Vega-Lite spec, Table view popup) */
+[data-testid="stElementToolbar"] {
+    display: none !important;
+}
+.vega-actions, .vega-actions-wrapper {
+    display: none !important;
+}
+
+/* Hide header anchor link chain icons next to titles */
+[data-testid="stHeaderActionElements"],
+a[data-testid="stHeaderActionElements"],
+.header-anchor,
+a.anchor-link,
+[data-testid="stMarkdownContainer"] a[href^="#"],
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
 /* -----------------------------------------------------------
    MOBILE & TABLET RESPONSIVE ADAPTATIONS
    ----------------------------------------------------------- */
@@ -331,8 +351,8 @@ st.sidebar.html("""
     <div style="font-size: 0.72rem; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 6px;">
         <i class="bi bi-cpu"></i> Clinical Bayesian AI
     </div>
-    <div style="font-size: 1.3rem; font-weight: 800; color: #f8fafc; line-height: 1.2; margin-top: 4px;">
-        ICU Sepsis Prediction
+    <div style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; line-height: 1.25; margin-top: 5px;">
+        A Bayesian Network-based Sepsis Risk Detection System
     </div>
 </div>
 """)
@@ -361,7 +381,7 @@ st.sidebar.markdown(f"""
 st.html("""
 <div class="med-header">
     <div class="med-tag"><i class="bi bi-hospital"></i> Intensive Care Unit (ICU) Decision Support</div>
-    <div class="med-title">Early Sepsis Detection Bayesian Network</div>
+    <div class="med-title">A Bayesian Network-based Sepsis Risk Detection System</div>
     <div class="med-sub">
         Sepsis is a life-threatening organ dysfunction caused by a dysregulated host response to infection. 
         Because symptoms develop gradually, this <b>Causal Bayesian Network</b> computes real-time sepsis risk 
@@ -669,13 +689,40 @@ elif mode == "PhysioNet ICU Patient Records":
     </div>
     """)
 
-    st.markdown("##### Hourly Vitals Trajectory in ICU:")
-    vitals_to_plot = ['HR', 'MAP', 'Resp']
-    available_cols = [c for c in vitals_to_plot if c in pat_df.columns]
+    st.markdown("##### <i class='bi bi-graph-up'></i> Hourly Vitals Trajectory in ICU Stay:", unsafe_allow_html=True)
+    st.caption("Subaybayan ang pagbabago ng mga vital signs ng pasyente sa bawat oras ng kanyang pananatili sa ICU:")
     
-    if available_cols:
-        chart_df = pat_df[['ICULOS'] + available_cols].dropna().set_index('ICULOS')
-        st.line_chart(chart_df)
+    # Map raw abbreviations to clear, human-readable labels
+    vitals_map = {
+        'HR': 'Heart Rate (bpm)',
+        'MAP': 'Blood Pressure MAP (mmHg)',
+        'Resp': 'Breathing Rate (br/min)'
+    }
+    present_cols = [c for c in vitals_map.keys() if c in pat_df.columns]
+    
+    if present_cols:
+        plot_df = pat_df[['ICULOS'] + present_cols].copy().dropna()
+        plot_df = plot_df.rename(columns={'ICULOS': 'Hour in ICU', **vitals_map})
+        
+        melted_df = plot_df.melt(
+            id_vars=['Hour in ICU'],
+            value_vars=[vitals_map[c] for c in present_cols],
+            var_name='Vital Sign',
+            value_name='Reading'
+        )
+        
+        line_chart = alt.Chart(melted_df).mark_line(point=alt.OverlayMarkDef(filled=True, size=35)).encode(
+            x=alt.X('Hour in ICU:Q', title='ICU Stay Duration (Hours)', axis=alt.Axis(tickMinStep=1, labelFontSize=12)),
+            y=alt.Y('Reading:Q', title='Vital Sign Reading', axis=alt.Axis(labelFontSize=12)),
+            color=alt.Color('Vital Sign:N', legend=alt.Legend(title='Clinical Metric', orient='top', labelFontSize=12)),
+            tooltip=[
+                alt.Tooltip('Hour in ICU:Q', title='Hour'),
+                alt.Tooltip('Vital Sign:N', title='Metric'),
+                alt.Tooltip('Reading:Q', title='Reading', format='.1f')
+            ]
+        ).properties(height=280).interactive()
+        
+        st.altair_chart(line_chart, use_container_width=True)
 
 # -------------------------------------------------------------------------------------------------
 # MODE 3: CAUSAL DAG DIAGRAM

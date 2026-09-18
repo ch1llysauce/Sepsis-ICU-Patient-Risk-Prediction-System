@@ -13,9 +13,9 @@ from src.sepsis_model import (
 )
 
 def main():
-    print("=========================================================")
-    print("   PhysioNet 2019 Sepsis Diagnostic Bayesian Network    ")
-    print("=========================================================")
+    print("=================================================================")
+    print("   A Bayesian Network-based Sepsis Risk Detection System         ")
+    print("=================================================================")
     
     csv_path = os.path.join("data", "physionet_sepsis_patients.csv")
     if not os.path.exists(csv_path):
