@@ -30,154 +30,38 @@ st.html("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
 
-html, body, [class*="css"] {
+/* Force dark mode across entire Streamlit shell regardless of client settings */
+html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
+    background-color: #0e1117 !important;
+    color: #f8fafc !important;
+    color-scheme: dark !important;
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* ===========================================================
-   THEME VARIABLES: ADAPTIVE DARK & LIGHT MODE
-   =========================================================== */
-:root {
-    --med-header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    --med-header-border: rgba(255, 255, 255, 0.08);
-    --med-title-color: #f8fafc;
-    --med-sub-color: #94a3b8;
-    --med-tag-bg: rgba(14, 165, 233, 0.15);
-    --med-tag-border: rgba(14, 165, 233, 0.35);
-    --med-tag-color: #38bdf8;
-    
-    --med-card-bg: rgba(30, 41, 59, 0.65);
-    --med-card-border: rgba(255, 255, 255, 0.08);
-    --med-card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
-    
-    --med-sidebar-bg: #0b0f19;
-    --med-sidebar-text: #f8fafc;
-    --med-sidebar-brand: #38bdf8;
-    
-    --med-stat-val: #f8fafc;
-    --med-stat-lbl: #94a3b8;
-    --med-box-bg: rgba(30, 41, 59, 0.5);
-    --med-box-text: #cbd5e1;
-    
-    --med-stable-bg: linear-gradient(135deg, rgba(6, 78, 59, 0.35) 0%, rgba(15, 23, 42, 0.95) 100%);
-    --med-stable-border: rgba(52, 211, 153, 0.45);
-    --med-stable-headline: #34d399;
-    --med-stable-label: #a7f3d0;
-    
-    --med-warning-bg: linear-gradient(135deg, rgba(120, 53, 15, 0.35) 0%, rgba(15, 23, 42, 0.95) 100%);
-    --med-warning-border: rgba(251, 146, 60, 0.45);
-    --med-warning-headline: #fb923c;
-    --med-warning-label: #fed7aa;
-    
-    --med-emergency-bg: linear-gradient(135deg, rgba(127, 29, 29, 0.45) 0%, rgba(15, 23, 42, 0.95) 100%);
-    --med-emergency-border: rgba(248, 113, 113, 0.55);
-    --med-emergency-headline: #f87171;
-    --med-emergency-label: #fecaca;
-    
-    --med-action-border: rgba(255, 255, 255, 0.1);
-    --med-action-text: #f1f5f9;
-    --med-action-badge-bg: rgba(255, 255, 255, 0.12);
-    --med-action-badge-text: #f8fafc;
+/* Sidebar force dark */
+div[data-testid="stSidebar"], section[data-testid="stSidebar"] {
+    background-color: #0b0f19 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
-
-/* Light Mode Overrides: Triggered by system light mode OR Streamlit Light theme */
-@media (prefers-color-scheme: light) {
-    :root {
-        --med-header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-        --med-header-border: #cbd5e1;
-        --med-title-color: #0f172a;
-        --med-sub-color: #475569;
-        --med-tag-bg: rgba(2, 132, 199, 0.1);
-        --med-tag-border: rgba(2, 132, 199, 0.25);
-        --med-tag-color: #0284c7;
-        
-        --med-card-bg: #ffffff;
-        --med-card-border: #e2e8f0;
-        --med-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-        
-        --med-sidebar-bg: #f8fafc;
-        --med-sidebar-text: #0f172a;
-        --med-sidebar-brand: #0284c7;
-        
-        --med-stat-val: #0f172a;
-        --med-stat-lbl: #64748b;
-        --med-box-bg: #f8fafc;
-        --med-box-text: #334155;
-        
-        --med-stable-bg: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-        --med-stable-border: #86efac;
-        --med-stable-headline: #15803d;
-        --med-stable-label: #166534;
-        
-        --med-warning-bg: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-        --med-warning-border: #fcd34d;
-        --med-warning-headline: #b45309;
-        --med-warning-label: #92400e;
-        
-        --med-emergency-bg: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-        --med-emergency-border: #fca5a5;
-        --med-emergency-headline: #b91c1c;
-        --med-emergency-label: #991b1b;
-        
-        --med-action-border: rgba(0, 0, 0, 0.08);
-        --med-action-text: #1e293b;
-        --med-action-badge-bg: rgba(0, 0, 0, 0.06);
-        --med-action-badge-text: #0f172a;
-    }
+div[data-testid="stSidebar"] *, section[data-testid="stSidebar"] * {
+    color: #f8fafc !important;
 }
-
-/* Also support Streamlit UI Theme toggle (when user explicitly picks Light in settings) */
-[data-theme="light"], [data-base-mode="light"], .stApp[data-theme="light"], .stApp[data-base-mode="light"] {
-    --med-header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-    --med-header-border: #cbd5e1;
-    --med-title-color: #0f172a;
-    --med-sub-color: #475569;
-    --med-tag-bg: rgba(2, 132, 199, 0.1);
-    --med-tag-border: rgba(2, 132, 199, 0.25);
-    --med-tag-color: #0284c7;
-    
-    --med-card-bg: #ffffff;
-    --med-card-border: #e2e8f0;
-    --med-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-    
-    --med-sidebar-bg: #f8fafc;
-    --med-sidebar-text: #0f172a;
-    --med-sidebar-brand: #0284c7;
-    
-    --med-stat-val: #0f172a;
-    --med-stat-lbl: #64748b;
-    --med-box-bg: #f8fafc;
-    --med-box-text: #334155;
-    
-    --med-stable-bg: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-    --med-stable-border: #86efac;
-    --med-stable-headline: #15803d;
-    --med-stable-label: #166534;
-    
-    --med-warning-bg: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-    --med-warning-border: #fcd34d;
-    --med-warning-headline: #b45309;
-    --med-warning-label: #92400e;
-    
-    --med-emergency-bg: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-    --med-emergency-border: #fca5a5;
-    --med-emergency-headline: #b91c1c;
-    --med-emergency-label: #991b1b;
-    
-    --med-action-border: rgba(0, 0, 0, 0.08);
-    --med-action-text: #1e293b;
-    --med-action-badge-bg: rgba(0, 0, 0, 0.06);
-    --med-action-badge-text: #0f172a;
+.med-sidebar-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #f8fafc !important;
+    line-height: 1.25;
+    margin-top: 5px;
 }
 
 /* Header */
 .med-header {
-    background: var(--med-header-bg);
-    border: 1px solid var(--med-header-border);
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     padding: 22px 28px;
     margin-bottom: 22px;
-    box-shadow: var(--med-card-shadow);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.45);
 }
 .med-tag {
     display: inline-flex;
@@ -185,9 +69,9 @@ html, body, [class*="css"] {
     gap: 8px;
     padding: 4px 14px;
     border-radius: 9999px;
-    background: var(--med-tag-bg);
-    border: 1px solid var(--med-tag-border);
-    color: var(--med-tag-color);
+    background: rgba(14, 165, 233, 0.15);
+    border: 1px solid rgba(14, 165, 233, 0.35);
+    color: #38bdf8 !important;
     font-size: 0.74rem;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -197,13 +81,13 @@ html, body, [class*="css"] {
 .med-title {
     font-size: 2rem;
     font-weight: 800;
-    color: var(--med-title-color);
+    color: #f8fafc !important;
     letter-spacing: -0.02em;
     margin: 0 0 6px 0;
 }
 .med-sub {
     font-size: 0.94rem;
-    color: var(--med-sub-color);
+    color: #94a3b8 !important;
     margin: 0;
     line-height: 1.5;
 }
@@ -214,19 +98,19 @@ html, body, [class*="css"] {
     padding: 22px 28px;
     border: 1.5px solid;
     margin-bottom: 22px;
-    box-shadow: var(--med-card-shadow);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.45);
 }
 .risk-stable {
-    background: var(--med-stable-bg);
-    border-color: var(--med-stable-border);
+    background: linear-gradient(135deg, rgba(6, 78, 59, 0.35) 0%, rgba(15, 23, 42, 0.95) 100%);
+    border-color: rgba(52, 211, 153, 0.45);
 }
 .risk-warning {
-    background: var(--med-warning-bg);
-    border-color: var(--med-warning-border);
+    background: linear-gradient(135deg, rgba(120, 53, 15, 0.35) 0%, rgba(15, 23, 42, 0.95) 100%);
+    border-color: rgba(251, 146, 60, 0.45);
 }
 .risk-emergency {
-    background: var(--med-emergency-bg);
-    border-color: var(--med-emergency-border);
+    background: linear-gradient(135deg, rgba(127, 29, 29, 0.45) 0%, rgba(15, 23, 42, 0.95) 100%);
+    border-color: rgba(248, 113, 113, 0.55);
 }
 
 .risk-layout {
@@ -253,7 +137,7 @@ html, body, [class*="css"] {
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--med-stat-lbl);
+    color: #94a3b8 !important;
 }
 .risk-headline {
     font-size: 1.65rem;
@@ -261,9 +145,9 @@ html, body, [class*="css"] {
     line-height: 1.1;
     margin-top: 3px;
 }
-.risk-stable .risk-headline { color: var(--med-stable-headline); }
-.risk-warning .risk-headline { color: var(--med-warning-headline); }
-.risk-emergency .risk-headline { color: var(--med-emergency-headline); }
+.risk-stable .risk-headline { color: #34d399 !important; }
+.risk-warning .risk-headline { color: #fb923c !important; }
+.risk-emergency .risk-headline { color: #f87171 !important; }
 
 .risk-stat {
     display: flex;
@@ -272,19 +156,19 @@ html, body, [class*="css"] {
 .risk-stat-label {
     font-size: 0.72rem;
     font-weight: 600;
-    color: var(--med-stat-lbl);
+    color: #94a3b8 !important;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 .risk-stat-value {
     font-size: 1.65rem;
     font-weight: 800;
-    color: var(--med-stat-val);
+    color: #f8fafc !important;
     margin-top: 2px;
 }
 .risk-stat-sub {
     font-size: 0.8rem;
-    color: #0284c7;
+    color: #38bdf8 !important;
     font-weight: 600;
 }
 
@@ -292,12 +176,12 @@ html, body, [class*="css"] {
 .action-box {
     margin-top: 16px;
     padding-top: 14px;
-    border-top: 1px solid var(--med-action-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     gap: 12px;
     font-size: 0.9rem;
-    color: var(--med-action-text);
+    color: #f1f5f9 !important;
 }
 .action-badge {
     font-weight: 800;
@@ -306,15 +190,15 @@ html, body, [class*="css"] {
     letter-spacing: 0.06em;
     padding: 4px 10px;
     border-radius: 6px;
-    background: var(--med-action-badge-bg);
-    color: var(--med-action-badge-text);
+    background: rgba(255, 255, 255, 0.12);
+    color: #f8fafc !important;
     white-space: nowrap;
 }
 
 /* Vital Signs Card Grid */
 .vital-card {
-    background: var(--med-card-bg);
-    border: 1px solid var(--med-card-border);
+    background: rgba(30, 41, 59, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     padding: 16px 18px;
     height: 100%;
@@ -322,7 +206,7 @@ html, body, [class*="css"] {
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.18s ease;
-    box-shadow: var(--med-card-shadow);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 .vital-card:hover {
     transform: translateY(-2px);
@@ -331,7 +215,7 @@ html, body, [class*="css"] {
 .vital-title {
     font-size: 0.76rem;
     font-weight: 600;
-    color: var(--med-stat-lbl);
+    color: #94a3b8 !important;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     display: flex;
@@ -341,13 +225,13 @@ html, body, [class*="css"] {
 .vital-num {
     font-size: 1.45rem;
     font-weight: 800;
-    color: var(--med-stat-val);
+    color: #f8fafc !important;
     font-family: 'JetBrains Mono', monospace;
     margin: 4px 0 2px 0;
 }
 .vital-normal-range {
     font-size: 0.75rem;
-    color: var(--med-stat-lbl);
+    color: #64748b !important;
     margin-bottom: 8px;
 }
 .vital-pill {
@@ -360,37 +244,32 @@ html, body, [class*="css"] {
     letter-spacing: 0.04em;
     align-self: flex-start;
 }
-.v-normal { background: rgba(16, 185, 129, 0.18); color: #16a34a; border: 1px solid rgba(16, 185, 129, 0.3); }
-.v-warning { background: rgba(249, 115, 22, 0.18); color: #ea580c; border: 1px solid rgba(249, 115, 22, 0.3); }
-.v-danger  { background: rgba(239, 68, 68, 0.18); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.3); }
+.v-normal { background: rgba(16, 185, 129, 0.18); color: #34d399 !important; border: 1px solid rgba(16, 185, 129, 0.3); }
+.v-warning { background: rgba(249, 115, 22, 0.18); color: #fb923c !important; border: 1px solid rgba(249, 115, 22, 0.3); }
+.v-danger  { background: rgba(239, 68, 68, 0.18); color: #f87171 !important; border: 1px solid rgba(239, 68, 68, 0.3); }
 
-/* Sidebar */
-div[data-testid="stSidebar"] {
-    background-color: var(--med-sidebar-bg) !important;
-    border-right: 1px solid var(--med-card-border);
-}
-.med-sidebar-title {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: var(--med-sidebar-text) !important;
-    line-height: 1.25;
-    margin-top: 5px;
-}
+/* Force Streamlit input controls and typography to dark */
 div.stButton > button {
     border-radius: 10px;
     font-weight: 600;
 }
+h1, h2, h3, h4, h5, h6, [data-testid="stMarkdownContainer"] h5 {
+    color: #f8fafc !important;
+}
+[data-testid="stMarkdownContainer"] p, [data-testid="stWidgetLabel"] p, label, .stCaption {
+    color: #cbd5e1 !important;
+}
 
 /* Presentation note box */
 .presentation-box {
-    background: var(--med-box-bg);
-    border: 1px solid var(--med-card-border);
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     padding: 18px 20px;
     height: 100%;
 }
 .presentation-box p {
-    color: var(--med-box-text) !important;
+    color: #cbd5e1 !important;
 }
 
 /* Prevent UI dimming / fading during script reruns */
