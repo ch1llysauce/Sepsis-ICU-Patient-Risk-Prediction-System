@@ -34,13 +34,150 @@ html, body, [class*="css"] {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* ===========================================================
+   THEME VARIABLES: ADAPTIVE DARK & LIGHT MODE
+   =========================================================== */
+:root {
+    --med-header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --med-header-border: rgba(255, 255, 255, 0.08);
+    --med-title-color: #f8fafc;
+    --med-sub-color: #94a3b8;
+    --med-tag-bg: rgba(14, 165, 233, 0.15);
+    --med-tag-border: rgba(14, 165, 233, 0.35);
+    --med-tag-color: #38bdf8;
+    
+    --med-card-bg: rgba(30, 41, 59, 0.65);
+    --med-card-border: rgba(255, 255, 255, 0.08);
+    --med-card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
+    
+    --med-sidebar-bg: #0b0f19;
+    --med-sidebar-text: #f8fafc;
+    --med-sidebar-brand: #38bdf8;
+    
+    --med-stat-val: #f8fafc;
+    --med-stat-lbl: #94a3b8;
+    --med-box-bg: rgba(30, 41, 59, 0.5);
+    --med-box-text: #cbd5e1;
+    
+    --med-stable-bg: linear-gradient(135deg, rgba(6, 78, 59, 0.35) 0%, rgba(15, 23, 42, 0.95) 100%);
+    --med-stable-border: rgba(52, 211, 153, 0.45);
+    --med-stable-headline: #34d399;
+    --med-stable-label: #a7f3d0;
+    
+    --med-warning-bg: linear-gradient(135deg, rgba(120, 53, 15, 0.35) 0%, rgba(15, 23, 42, 0.95) 100%);
+    --med-warning-border: rgba(251, 146, 60, 0.45);
+    --med-warning-headline: #fb923c;
+    --med-warning-label: #fed7aa;
+    
+    --med-emergency-bg: linear-gradient(135deg, rgba(127, 29, 29, 0.45) 0%, rgba(15, 23, 42, 0.95) 100%);
+    --med-emergency-border: rgba(248, 113, 113, 0.55);
+    --med-emergency-headline: #f87171;
+    --med-emergency-label: #fecaca;
+    
+    --med-action-border: rgba(255, 255, 255, 0.1);
+    --med-action-text: #f1f5f9;
+    --med-action-badge-bg: rgba(255, 255, 255, 0.12);
+    --med-action-badge-text: #f8fafc;
+}
+
+/* Light Mode Overrides: Triggered by system light mode OR Streamlit Light theme */
+@media (prefers-color-scheme: light) {
+    :root {
+        --med-header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+        --med-header-border: #cbd5e1;
+        --med-title-color: #0f172a;
+        --med-sub-color: #475569;
+        --med-tag-bg: rgba(2, 132, 199, 0.1);
+        --med-tag-border: rgba(2, 132, 199, 0.25);
+        --med-tag-color: #0284c7;
+        
+        --med-card-bg: #ffffff;
+        --med-card-border: #e2e8f0;
+        --med-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        
+        --med-sidebar-bg: #f8fafc;
+        --med-sidebar-text: #0f172a;
+        --med-sidebar-brand: #0284c7;
+        
+        --med-stat-val: #0f172a;
+        --med-stat-lbl: #64748b;
+        --med-box-bg: #f8fafc;
+        --med-box-text: #334155;
+        
+        --med-stable-bg: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        --med-stable-border: #86efac;
+        --med-stable-headline: #15803d;
+        --med-stable-label: #166534;
+        
+        --med-warning-bg: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        --med-warning-border: #fcd34d;
+        --med-warning-headline: #b45309;
+        --med-warning-label: #92400e;
+        
+        --med-emergency-bg: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        --med-emergency-border: #fca5a5;
+        --med-emergency-headline: #b91c1c;
+        --med-emergency-label: #991b1b;
+        
+        --med-action-border: rgba(0, 0, 0, 0.08);
+        --med-action-text: #1e293b;
+        --med-action-badge-bg: rgba(0, 0, 0, 0.06);
+        --med-action-badge-text: #0f172a;
+    }
+}
+
+/* Also support Streamlit UI Theme toggle (when user explicitly picks Light in settings) */
+[data-theme="light"], [data-base-mode="light"], .stApp[data-theme="light"], .stApp[data-base-mode="light"] {
+    --med-header-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    --med-header-border: #cbd5e1;
+    --med-title-color: #0f172a;
+    --med-sub-color: #475569;
+    --med-tag-bg: rgba(2, 132, 199, 0.1);
+    --med-tag-border: rgba(2, 132, 199, 0.25);
+    --med-tag-color: #0284c7;
+    
+    --med-card-bg: #ffffff;
+    --med-card-border: #e2e8f0;
+    --med-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    
+    --med-sidebar-bg: #f8fafc;
+    --med-sidebar-text: #0f172a;
+    --med-sidebar-brand: #0284c7;
+    
+    --med-stat-val: #0f172a;
+    --med-stat-lbl: #64748b;
+    --med-box-bg: #f8fafc;
+    --med-box-text: #334155;
+    
+    --med-stable-bg: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    --med-stable-border: #86efac;
+    --med-stable-headline: #15803d;
+    --med-stable-label: #166534;
+    
+    --med-warning-bg: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    --med-warning-border: #fcd34d;
+    --med-warning-headline: #b45309;
+    --med-warning-label: #92400e;
+    
+    --med-emergency-bg: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    --med-emergency-border: #fca5a5;
+    --med-emergency-headline: #b91c1c;
+    --med-emergency-label: #991b1b;
+    
+    --med-action-border: rgba(0, 0, 0, 0.08);
+    --med-action-text: #1e293b;
+    --med-action-badge-bg: rgba(0, 0, 0, 0.06);
+    --med-action-badge-text: #0f172a;
+}
+
 /* Header */
 .med-header {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--med-header-bg);
+    border: 1px solid var(--med-header-border);
     border-radius: 16px;
     padding: 22px 28px;
     margin-bottom: 22px;
+    box-shadow: var(--med-card-shadow);
 }
 .med-tag {
     display: inline-flex;
@@ -48,9 +185,9 @@ html, body, [class*="css"] {
     gap: 8px;
     padding: 4px 14px;
     border-radius: 9999px;
-    background: rgba(14, 165, 233, 0.15);
-    border: 1px solid rgba(14, 165, 233, 0.35);
-    color: #38bdf8;
+    background: var(--med-tag-bg);
+    border: 1px solid var(--med-tag-border);
+    color: var(--med-tag-color);
     font-size: 0.74rem;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -60,13 +197,13 @@ html, body, [class*="css"] {
 .med-title {
     font-size: 2rem;
     font-weight: 800;
-    color: #f8fafc;
+    color: var(--med-title-color);
     letter-spacing: -0.02em;
     margin: 0 0 6px 0;
 }
 .med-sub {
     font-size: 0.94rem;
-    color: #94a3b8;
+    color: var(--med-sub-color);
     margin: 0;
     line-height: 1.5;
 }
@@ -77,19 +214,19 @@ html, body, [class*="css"] {
     padding: 22px 28px;
     border: 1.5px solid;
     margin-bottom: 22px;
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--med-card-shadow);
 }
 .risk-stable {
-    background: linear-gradient(135deg, rgba(6, 78, 59, 0.35) 0%, rgba(15, 23, 42, 0.95) 100%);
-    border-color: rgba(52, 211, 153, 0.45);
+    background: var(--med-stable-bg);
+    border-color: var(--med-stable-border);
 }
 .risk-warning {
-    background: linear-gradient(135deg, rgba(120, 53, 15, 0.35) 0%, rgba(15, 23, 42, 0.95) 100%);
-    border-color: rgba(251, 146, 60, 0.45);
+    background: var(--med-warning-bg);
+    border-color: var(--med-warning-border);
 }
 .risk-emergency {
-    background: linear-gradient(135deg, rgba(127, 29, 29, 0.45) 0%, rgba(15, 23, 42, 0.95) 100%);
-    border-color: rgba(248, 113, 113, 0.55);
+    background: var(--med-emergency-bg);
+    border-color: var(--med-emergency-border);
 }
 
 .risk-layout {
@@ -116,7 +253,7 @@ html, body, [class*="css"] {
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: var(--med-stat-lbl);
 }
 .risk-headline {
     font-size: 1.65rem;
@@ -124,9 +261,9 @@ html, body, [class*="css"] {
     line-height: 1.1;
     margin-top: 3px;
 }
-.risk-stable .risk-headline { color: #34d399; }
-.risk-warning .risk-headline { color: #fb923c; }
-.risk-emergency .risk-headline { color: #f87171; }
+.risk-stable .risk-headline { color: var(--med-stable-headline); }
+.risk-warning .risk-headline { color: var(--med-warning-headline); }
+.risk-emergency .risk-headline { color: var(--med-emergency-headline); }
 
 .risk-stat {
     display: flex;
@@ -135,19 +272,19 @@ html, body, [class*="css"] {
 .risk-stat-label {
     font-size: 0.72rem;
     font-weight: 600;
-    color: #94a3b8;
+    color: var(--med-stat-lbl);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 .risk-stat-value {
     font-size: 1.65rem;
     font-weight: 800;
-    color: #f8fafc;
+    color: var(--med-stat-val);
     margin-top: 2px;
 }
 .risk-stat-sub {
     font-size: 0.8rem;
-    color: #38bdf8;
+    color: #0284c7;
     font-weight: 600;
 }
 
@@ -155,12 +292,12 @@ html, body, [class*="css"] {
 .action-box {
     margin-top: 16px;
     padding-top: 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--med-action-border);
     display: flex;
     align-items: center;
     gap: 12px;
     font-size: 0.9rem;
-    color: #f1f5f9;
+    color: var(--med-action-text);
 }
 .action-badge {
     font-weight: 800;
@@ -169,15 +306,15 @@ html, body, [class*="css"] {
     letter-spacing: 0.06em;
     padding: 4px 10px;
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.12);
-    color: #f8fafc;
+    background: var(--med-action-badge-bg);
+    color: var(--med-action-badge-text);
     white-space: nowrap;
 }
 
 /* Vital Signs Card Grid */
 .vital-card {
-    background: rgba(30, 41, 59, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--med-card-bg);
+    border: 1px solid var(--med-card-border);
     border-radius: 14px;
     padding: 16px 18px;
     height: 100%;
@@ -185,15 +322,16 @@ html, body, [class*="css"] {
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.18s ease;
+    box-shadow: var(--med-card-shadow);
 }
 .vital-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(56, 189, 248, 0.35);
+    border-color: rgba(56, 189, 248, 0.45);
 }
 .vital-title {
     font-size: 0.76rem;
     font-weight: 600;
-    color: #94a3b8;
+    color: var(--med-stat-lbl);
     text-transform: uppercase;
     letter-spacing: 0.04em;
     display: flex;
@@ -203,13 +341,13 @@ html, body, [class*="css"] {
 .vital-num {
     font-size: 1.45rem;
     font-weight: 800;
-    color: #f8fafc;
+    color: var(--med-stat-val);
     font-family: 'JetBrains Mono', monospace;
     margin: 4px 0 2px 0;
 }
 .vital-normal-range {
     font-size: 0.75rem;
-    color: #64748b;
+    color: var(--med-stat-lbl);
     margin-bottom: 8px;
 }
 .vital-pill {
@@ -222,18 +360,37 @@ html, body, [class*="css"] {
     letter-spacing: 0.04em;
     align-self: flex-start;
 }
-.v-normal { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-.v-warning { background: rgba(249, 115, 22, 0.18); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
-.v-danger  { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.v-normal { background: rgba(16, 185, 129, 0.18); color: #16a34a; border: 1px solid rgba(16, 185, 129, 0.3); }
+.v-warning { background: rgba(249, 115, 22, 0.18); color: #ea580c; border: 1px solid rgba(249, 115, 22, 0.3); }
+.v-danger  { background: rgba(239, 68, 68, 0.18); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.3); }
 
 /* Sidebar */
 div[data-testid="stSidebar"] {
-    background-color: #0b0f19;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: var(--med-sidebar-bg) !important;
+    border-right: 1px solid var(--med-card-border);
+}
+.med-sidebar-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--med-sidebar-text) !important;
+    line-height: 1.25;
+    margin-top: 5px;
 }
 div.stButton > button {
     border-radius: 10px;
     font-weight: 600;
+}
+
+/* Presentation note box */
+.presentation-box {
+    background: var(--med-box-bg);
+    border: 1px solid var(--med-card-border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    height: 100%;
+}
+.presentation-box p {
+    color: var(--med-box-text) !important;
 }
 
 /* Prevent UI dimming / fading during script reruns */
@@ -348,10 +505,10 @@ bn_model, bn_infer, df_patients = load_sepsis_network()
 # -------------------------------------------------------------------------------------------------
 st.sidebar.html("""
 <div style="padding: 10px 0 12px 0;">
-    <div style="font-size: 0.72rem; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 6px;">
+    <div style="font-size: 0.72rem; font-weight: 700; color: var(--med-sidebar-brand, #0284c7); text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 6px;">
         <i class="bi bi-cpu"></i> Clinical Bayesian AI
     </div>
-    <div style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; line-height: 1.25; margin-top: 5px;">
+    <div class="med-sidebar-title">
         A Bayesian Network-based Sepsis Risk Detection System
     </div>
 </div>
@@ -617,14 +774,14 @@ if mode == "Live Bedside Vitals Simulator":
 
     with col_g2:
         st.html(f"""
-        <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 18px 20px; height: 100%;">
-            <div style="font-size: 0.85rem; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+        <div class="presentation-box">
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--med-sidebar-brand, #0284c7); text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
                 <i class="bi bi-info-circle-fill"></i> Presentation Talking Point (Missing Data):
             </div>
-            <p style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 6px;">
+            <p style="font-size: 0.88rem; line-height: 1.5; margin-bottom: 6px;">
                 Subukan ang <b>Bed 4 (Missing Sensor Telemetry)</b> kung saan naka-disconnect ang Blood Pressure at Oxygen sensors.
             </p>
-            <p style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.5;">
+            <p style="font-size: 0.88rem; line-height: 1.5;">
                 Hindi nag-crash ang Bayesian Network! Awtomatiko nitong <b>mini-marginalize</b> ang mga nawawalang readings at binibigyan pa rin ang doktor ng tamang risk estimate.
             </p>
         </div>
