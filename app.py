@@ -19,7 +19,7 @@ st.set_page_config(
     page_title="A Bayesian Network-based Sepsis Risk Detection System",
     page_icon="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/hospital.svg",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="auto"
 )
 
 # -------------------------------------------------------------------------------------------------
